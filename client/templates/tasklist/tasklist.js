@@ -1,10 +1,13 @@
   // This code only runs on the client
   Template.tasklist.helpers({
     tasks: function () {
-      if (Session.get("hideCompleted")) {
+      if (Session.get("hideCompleted")) 
+      {
         // If hide completed is checked, filter tasks
         return Tasks.find({checked: {$ne: true}}, {sort: {createdAt: -1}});
-      } else {
+      } 
+      else 
+      {
         // Otherwise, return all of the tasks
         return Tasks.find({}, {sort: {createdAt: -1}});
       }

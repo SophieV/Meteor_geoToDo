@@ -19,6 +19,10 @@ body {
   font-size: 14px;
 }
 
+article {
+  margin: 20px 0;
+}
+
 .container {
   max-width: 600px;
   margin: 0 auto;
@@ -26,9 +30,17 @@ body {
   background: white;
 }
 
-.map-container {
-  height: 500px;
-  max-width: 100%;
+footer {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0;
+  background: #315481;
+  color: white;
+  text-align: center;
+  padding-top: 10px;
+  height: 30px;
+  max-height: 30px;
+  font-style: italic;
 }
 
 header {
