@@ -1,0 +1,22 @@
+<head>
+  <title>Todo List</title>
+</head>
+
+<body>
+</body>
+
+<template name="appLayout">
+  <div class="container">
+    <header>
+      <h1>Todo List ({{incompleteCount}})</h1>
+    </header>
+
+    {{> loginButtons}}
+
+	<article>
+		<!-- call main content from route to print here -->
+	    {{> yield}}
+	</article>
+
+  </div>
+</template>

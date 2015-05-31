@@ -1,20 +1,7 @@
-<head>
-  <title>Todo List</title>
-</head>
+<template name="home">
+  Welcome !
 
-<body>
-  <div class="container">
-    <header>
-      <h1>Todo List ({{incompleteCount}})</h1>
-    </header>
+  <a href="/map">Map View of the Tasks</a>
 
-    {{> loginButtons}}
-
-    {{> map}}
-
-    <div class="list-container">
-          {{> tasklist}}
-    </div>
-
-  </div>
-</body>
+  <a href="/tasks">Text View of the Tasks</a>
+</template>
