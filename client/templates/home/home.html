@@ -1,0 +1,20 @@
+<head>
+  <title>Todo List</title>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Todo List ({{incompleteCount}})</h1>
+    </header>
+
+    {{> loginButtons}}
+
+    {{> map}}
+
+    <div class="list-container">
+          {{> tasklist}}
+    </div>
+
+  </div>
+</body>
