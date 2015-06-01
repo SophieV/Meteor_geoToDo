@@ -1,5 +1,8 @@
   // This code only runs on the client
   Template.tasklist.helpers({
+    incompleteCount: function () {
+      return Tasks.find({checked: {$ne: true}}).count(); //if data context set, would be this.collection.find
+    },
     tasks: function () {
       if (Session.get("hideCompleted")) 
       {

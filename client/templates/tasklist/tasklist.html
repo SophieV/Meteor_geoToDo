@@ -1,4 +1,8 @@
 <template name="tasklist">
+	<header>
+      <h1>Todo List ({{incompleteCount}})</h1>
+    </header>
+
 	<label class="hide-completed">
 	  <input type="checkbox" checked="{{hideCompleted}}" />
 	  Hide Completed Tasks
