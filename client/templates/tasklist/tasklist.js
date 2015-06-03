@@ -26,6 +26,16 @@
 
       var text = event.target.text.value;
 
+      var address = event.target.location.value;
+      var request;
+
+      if (address != null)
+      {
+        var coordinates = Meteor.call("getGeoCoordinates", address, function(err, result){
+          console.log('received '+ result);
+        });
+      }
+
       Meteor.call("addTask", text);
 
       // Tasks.insert({

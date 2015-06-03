@@ -10,7 +10,25 @@
 
 {{#if currentUser}}
 	<form class="new-task">
-		<input type="text" name="text" placeholder="Type to add new tasks" />
+		<div class="container">
+			<div class="row">
+				<div class="span6">What ?</div>
+				<div class="span6">
+					<input type="text" name="text" placeholder="Type to add new tasks" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="span6">Where ?</div>
+				<div class="span6">
+					<input type="text" name="location" placeholder="Type to assign a location" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<button type="submit">Add</button>
+				</div>
+			</div>
+		</div>
 	</form>
 {{/if}}
     <ul>
