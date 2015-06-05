@@ -31,10 +31,17 @@
 
       if (address != null)
       {
-        var coordinates = Meteor.call("getGeoCoordinates", address, function(err, result){
-          console.log('received '+ result);
+        Meteor.call("getGeoCoordinates", address, function(err, result){
+          if (!err){
+            console.log(result);
+            return result;
+          } else {
+            console.log(err);
+            return err;
+          }
         });
       }
+
 
       Meteor.call("addTask", text);
 
