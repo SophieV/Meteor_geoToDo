@@ -1,31 +1,31 @@
 Meteor.methods({
-  getSum: function(num1, num2){
-    return num1+num2;
-  },
   getGeoCoordinates: function (addressText) {
     var url = ["http://maps.google.com/maps/api/geocode/json?address=", addressText].join('');
     var result = HTTP.get(url, {timeout:30000});
 
-    if(result.statusCode==200) {
+    if(result.statusCode==200) 
+    {
       var response = JSON.parse(result.content);
       console.log("response received.");
-      console.log(response);
 
       if (response != null && response.results != null && response.results.length === 1)
       {
         if (response.results[0].geometry != null)
         {
           console.log(response.results[0].geometry.location);
-          return coordinates = response.results[0].geometry.location;
+
+          return coordinates = {coordinates: response.results[0].geometry.location, name: response.results[0].formatted_address };
         }
       }
-    } else {
+    } 
+    else 
+    {
       console.log("Response issue: ", result.statusCode);
       var errorJson = JSON.parse(result.content);
       throw new Meteor.Error(result.statusCode, errorJson.error);
     }
   },
-  addTask: function (text) {
+  addTask: function (text, coordinatesWithName) {
     // Make sure the user is logged in before inserting a task
     if (! Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
@@ -35,7 +35,10 @@ Meteor.methods({
       text: text,
       createdAt: new Date(),
       owner: Meteor.userId(),
-      username: Meteor.user().username
+      username: Meteor.user().username,
+      loc : { type: "Point", 
+              coordinates: coordinatesWithName.coordinates, 
+              name: coordinatesWithName.name }
     });
   },
   deleteTask: function (taskId) {

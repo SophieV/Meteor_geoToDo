@@ -14,7 +14,14 @@
       </button>
     {{/if}}
 
-    <span class="text"><strong>{{username}}</strong> - {{text}}</span>
+    {{#if isGeoTagged}}
+      <span class="featured">GeoTagged</span>
+
+      <span class="text"><strong>{{text}}</strong> in {{loc.name}}, by {{username}}</span>
+      {{else}}
+
+      <span class="text"><strong>{{text}}</strong> by {{username}}</span>
+    {{/if}}
 
     </li>
 </template>

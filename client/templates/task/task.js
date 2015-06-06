@@ -1,6 +1,9 @@
   Template.task.helpers({
     isOwner: function () {
       return this.owner === Meteor.userId();
+    },
+    isGeoTagged: function() {
+      return this.loc != null;
     }
   });
 

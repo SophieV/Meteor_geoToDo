@@ -27,30 +27,22 @@
       var text = event.target.text.value;
 
       var address = event.target.location.value;
-      var request;
+
+      var coordinatesWithName;
 
       if (address != null)
       {
-        Meteor.call("getGeoCoordinates", address, function(err, result){
+         Meteor.call("getGeoCoordinates", address, function(err, result){
           if (!err){
             console.log(result);
-            return result;
+            coordinatesWithName = result;
+            Meteor.call("addTask", text, coordinatesWithName);
           } else {
             console.log(err);
-            return err;
+            coordinatesWithName = null;
           }
         });
       }
-
-
-      Meteor.call("addTask", text);
-
-      // Tasks.insert({
-      //   text: text,
-      //   owner: Meteor.userId(),
-      //   username: Meteor.user().username,
-      //   createdAt: new Date() // current time
-      // });
 
       // Clear form
       event.target.text.value = "";
