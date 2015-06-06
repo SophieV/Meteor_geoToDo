@@ -46,6 +46,7 @@
 
       // Clear form
       event.target.text.value = "";
+      event.target.location.value = "";
 
       // Prevent default form submit
       return false;
