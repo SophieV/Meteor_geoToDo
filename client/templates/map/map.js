@@ -14,6 +14,8 @@ Template.map.helpers({
 Template.map.onCreated(function() {
   console.log(this.data.count());
 
+  var geoLocatedTasks = this.data;
+
   // We can use the `ready` callback to interact with the map API once the map is ready.
   GoogleMaps.ready('exampleMap', function(map) {
 
@@ -59,51 +61,19 @@ Template.map.onCreated(function() {
         }
     };
 
-    // // Check to see if this browser supports geolocation.
-    // if (navigator.geolocation) {
+    var locationMarker = null;
 
-    //     // This is the location marker that we will be using
-    //     // on the map. Let's store a reference to it here so
-    //     // that it can be updated in several places.
-    //     var locationMarker = null;
-
-
-    //     // Get the location of the user's browser using the
-    //     // native geolocation service. When we invoke this method
-    //     // only the first callback is requied. The second
-    //     // callback - the error handler - and the third
-    //     // argument - our configuration options - are optional.
-    //     navigator.geolocation.getCurrentPosition(
-    //         function( position ){
-
-    //             // Check to see if there is already a location.
-    //             // There is a bug in FireFox where this gets
-    //             // invoked more than once with a cahced result.
-    //             if (locationMarker){
-    //                 return;
-    //             }
-
-    //             // Log that this is the initial position.
-    //             console.log( "Initial Position Found" );
-
-    //             // Add a marker to the map using the position.
-    //             locationMarker = addMarker(
-    //                 position.coords.latitude,
-    //                 position.coords.longitude,
-    //                 "Initial Position"
-    //             );
-
-    //         },
-    //         function( error ){
-    //             console.log( "Something went wrong: ", error );
-    //         },
-    //         {
-    //             timeout: (5 * 1000),
-    //             maximumAge: (1000 * 60 * 15),
-    //             enableHighAccuracy: true
-    //         }
-    //     );
-    //   }
+    if (geoLocatedTasks != null)
+    {
+      geoLocatedTasks.forEach(function(geoTask){
+        console.log(geoTask.loc.coordinates.lat);
+        locationMarker = addMarker(
+            geoTask.loc.coordinates.lat,
+            geoTask.loc.coordinates.lng,
+            geoTask.loc.coordinates.name
+        );
+      });
+    }
 
     // Check to see if this browser supports geolocation.
     if (navigator.geolocation) {
