@@ -7,6 +7,7 @@ Meteor.methods({
     {
       var response = JSON.parse(result.content);
       console.log("response received.");
+      console.log(response);
 
       if (response != null && response.results != null && response.results.length === 1)
       {
@@ -16,6 +17,10 @@ Meteor.methods({
 
           return coordinates = {coordinates: response.results[0].geometry.location, name: response.results[0].formatted_address };
         }
+      }
+      else
+      {
+        throw new Meteor.Error('tooManyOptions', 'toom many results to choose from');
       }
     } 
     else 
@@ -31,15 +36,27 @@ Meteor.methods({
       throw new Meteor.Error("not-authorized");
     }
 
-    Tasks.insert({
-      text: text,
-      createdAt: new Date(),
-      owner: Meteor.userId(),
-      username: Meteor.user().username,
-      loc : { type: "Point", 
-              coordinates: coordinatesWithName.coordinates, 
-              name: coordinatesWithName.name }
-    });
+    if (coordinatesWithName != null)
+    {
+      Tasks.insert({
+        text: text,
+        createdAt: new Date(),
+        owner: Meteor.userId(),
+        username: Meteor.user().username,
+        loc : { type: "Point", 
+                coordinates: coordinatesWithName.coordinates, 
+                name: coordinatesWithName.name }
+      });
+    }
+    else
+    {
+      Tasks.insert({
+        text: text,
+        createdAt: new Date(),
+        owner: Meteor.userId(),
+        username: Meteor.user().username
+      });
+    }
   },
   deleteTask: function (taskId) {
     var task = Tasks.findOne(taskId);

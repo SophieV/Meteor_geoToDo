@@ -66,6 +66,15 @@ header .hide-completed {
   margin-left: 5px;
 }
 
+.error {
+  color:red;
+  border:solid 1px red;
+}
+
+.reset_btn {
+  color:lightgrey;
+}
+
 @media (max-width: 600px) {
   li {
     padding: 12px 15px;

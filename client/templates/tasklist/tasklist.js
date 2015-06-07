@@ -17,39 +17,78 @@
     },
     hideCompleted: function () {
       return Session.get("hideCompleted");
+    },
+    taskTitleNotPopulated: function() {
+      return !Template.instance().state.get('titlePopulated');
+    },
+    taskLocationNotRecognized: function() {
+      return !Template.instance().state.get('locationIdentified');
     }
   });
 
-    Template.tasklist.events({
-    "submit .new-task": function (event) {
-      // This function is called when the new task form is submitted
+  Template.tasklist.onCreated(function() {
+    this.state = new ReactiveDict();
+    this.state.set('titlePopulated', true);
+    this.state.set('locationIdentified',true);
+  });
 
-      var text = event.target.text.value;
+  Template.tasklist.events({
+    "reset .new-task": function (event, template) {
+      event.target.text.value = "";
+      event.target.location.value = "";
+      template.state.set('titlePopulated', true);
+      template.state.set('locationIdentified', true);
+    },
+    "submit .new-task": function (event, template) {
 
+    template.state.set('titlePopulated', true);
+    template.state.set('locationIdentified', true);
+
+    var text = event.target.text.value;
+
+    try
+    {
+      NonEmptyString = Match.Where(function (x) {
+        check(x, String);
+        return x.length > 0;
+      });
+      check(text, NonEmptyString);
+    }
+    catch (err)
+    {
+      template.state.set('titlePopulated', false);
+      console.log('the new task is missing a title');
+      event.preventDefault();
+    }
+
+    if (template.state.get('titlePopulated'))
+    {
       var address = event.target.location.value;
 
-      var coordinatesWithName;
-
-      if (address != null)
+      if (address != '')
       {
-         Meteor.call("getGeoCoordinates", address, function(err, result){
+         Meteor.call("getGeoCoordinates", address, function(err, coordinatesWithName){
           if (!err){
-            console.log(result);
-            coordinatesWithName = result;
             Meteor.call("addTask", text, coordinatesWithName);
           } else {
-            console.log(err);
-            coordinatesWithName = null;
+            console.log('error' + err);
+            template.state.set('locationIdentified', false);
+            event.preventDefault();
           }
         });
       }
+      else
+      {
+        Meteor.call("addTask", text);
 
-      // Clear form
-      event.target.text.value = "";
-      event.target.location.value = "";
+        // Clear form
+        event.target.text.value = "";
+        event.target.location.value = "";
+      }
 
       // Prevent default form submit
       return false;
+    }
     },
     "change .hide-completed input": function (event) {
       Session.set("hideCompleted", event.target.checked);
