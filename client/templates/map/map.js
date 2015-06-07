@@ -5,14 +5,15 @@ Template.map.helpers({
       // Map initialization options
       return {
         center: new google.maps.LatLng(-37.8136, 144.9631),
-        zoom: 8
+        zoom: 8,
+        maxZoom: 15,
+        minZoom: 1
       };
     }
   }
 });
 
 Template.map.onCreated(function() {
-  console.log(this.data.count());
 
   var geoLocatedTasks = this.data;
 
@@ -70,7 +71,7 @@ Template.map.onCreated(function() {
         locationMarker = addMarker(
             geoTask.loc.coordinates.lat,
             geoTask.loc.coordinates.lng,
-            geoTask.loc.coordinates.name
+            geoTask.text
         );
       });
     }
